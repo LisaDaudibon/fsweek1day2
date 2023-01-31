@@ -8,7 +8,7 @@ class Player
   def initialize(name_of_player) #
     @name = (name_of_player)
     @life_point = 10
-    puts @@enemies << self.name
+    @@enemies << self.name
   end
 
   def show_state
@@ -71,19 +71,14 @@ class HoomanPlayer < Player
     if life_pack_random == 1
       puts "Tu n'as rien trouvé ... Pas de chance, n'hésite pas à réessayer <3 Ne perds pas confiance !"
     elsif life_pack_random >= 2 && life_pack_random <= 5
-      if @life_point < 50
-        @life_point = @life_point + 50
-      else
-        @life_point = 100
-      end
+      @life_point = @life_point + 50
       puts "Bravo, tu as trouvé un pack de 50 points de vie ! Tu as désormais #{@life_point} points de vie !"
     elsif life_pack_random == 6
-      if @life_point < 20
         @life_point = @life_point + 80
-      else
-        @life_point = 100
-      end
       puts "Bravo, tu as trouvé un pack de 80 points de vie, quel bg ! Tu as désormais #{@life_point} points de vie ! Tu vas vivre super longtemps <3"
+    end
+    if @life_pack > 100
+      @life_pack = 100
     end
   end
 
