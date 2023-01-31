@@ -31,3 +31,5 @@ while player1.life_point > 0 && player2.life_point > 0
   print player1.show_state
   puts player2.show_state
 end
+
+player3.life_pack

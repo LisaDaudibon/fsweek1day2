@@ -3,10 +3,12 @@ require 'pry'
 
 class Player
   attr_accessor :name, :life_point
- 
+  @@enemies = []
+
   def initialize(name_of_player) #
     @name = (name_of_player)
     @life_point = 10
+    puts @@enemies << self.name
   end
 
   def show_state
@@ -30,7 +32,7 @@ class Player
   end
 
   def compute_damage
-    return rand(1..6)
+    rand(1..6)
   end
 end
 
@@ -49,7 +51,7 @@ class HoomanPlayer < Player
   end
 
   def compute_damage
-    return rand(1..6) * @weapon_level
+    rand(1..6) * @weapon_level
   end
   
   def search_weapon
