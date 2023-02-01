@@ -3,15 +3,15 @@ require 'pry'
 
 class Player
   attr_accessor :name, :life_point
-  @@enemies = []
+  @@enemies = [] #on veut ranger tous les bots dans array
 
-  def initialize(name_of_player) #
+  def initialize(name_of_player) #c'est le début, on définit nos players, dans app2, c'est des bots, donc des enemies
     @name = (name_of_player)
     @life_point = 10
     @@enemies << self.name
   end
 
-  def show_state
+  def show_state #d'abord elle en où notre vie ? Il faut l'afficher, d'où cette méthode
     if @life_point <= 0
       puts "#{@name} est mort ! Sorry xoxo" 
     else
@@ -19,12 +19,12 @@ class Player
     end
   end
 
-  def gets_damage(damage_number)
+  def gets_damage(damage_number) #elle sert pas à grand-chose mais on l'applique dans la def suivante donc bon
     @life_point = @life_point - damage_number
     puts "#{@name} est mort ! Sorry xoxo" if @life_point <= 0
   end
 
-  def attacks(player_attacked)
+  def attacks(player_attacked) #enfin les choses sérieuses, on définit une variable d'attaque
     puts "Le joueur #{@name} attaque le joueur #{player_attacked.name} !"
     damage = compute_damage
     player_attacked.gets_damage(damage)
@@ -38,9 +38,11 @@ end
 
 class HoomanPlayer < Player
   attr_accessor :weapon_level
- 
+  @@partners = []
+
   def initialize(name_of_player)
     @weapon_level = 1
+    @@partners << Partner.name
 
     super(name_of_player)
     @life_point = 100
@@ -81,5 +83,32 @@ class HoomanPlayer < Player
       @life_pack = 100
     end
   end
+end
 
+class Partner < HoomanPlayer
+  
+  def initialize(name_of_player)
+    super(name_of_player)
+  end
+
+  def potion_friend
+    potion = 10
+    @life_point = @life_point + 10 if @life_point <= 90
+    puts "Ton #{@name} t'as passé en scred une potion ! Personne n'a rien vu parce qu'elle est super trop discrète <3 Ta vie est désormais égale #{life_point} "
+  end
+
+  def singing_friend
+    puts "Ta pote est tellement cool qu'elle te chante une super chanson :" #elle chante 'Sous l'océan', de la petite sirène
+    puts "Le roseau est toujours plus vert dans le marais d'à côté \n 
+    Toi, t'aimerais bien vivre sur terre, bonjour la calamité \n
+    Regarde bien le monde qui t'entoure dans l'océan parfumé \n
+    On fait Carnaval tous les jours, mieux tu pourras pas trouver \n \n
+    Sous l'océan, sous l'océan \n
+    Doudou, c'est bien mieux, tout l'monde est heureux sous l'océan \n
+    Là-haut, ils bossent toute la journée \n
+    Esclavagés et prisonniers \n
+    Pendant qu'on plonge comme des éponges sous l'océan (to doo dooo doo) \n"
+    @weapon_level = @weapon_level + 2
+    puts "Cela te donne un bonus de + 2 à ton niveau d'armes ! <3 Tu as désormais une arme de niveau #{weapon_level} ! Magnifique "
+  end
 end
